@@ -619,7 +619,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -967,6 +967,16 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
+})
+
+-- Add goimports on save
+local format_sync_grp = vim.api.nvim_create_augroup('GoFormat', {})
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.go',
+  callback = function()
+    require('go.format').goimports()
+  end,
+  group = format_sync_grp,
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
